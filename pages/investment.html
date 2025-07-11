@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Investment Plans</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a23 0%, #1a1a3a 100%);
+      font-family: 'Orbitron', sans-serif;
+      overflow: hidden;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .title {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .infinity-symbol {
+      font-size: 40px;
+      color: #ff6b35;
+      font-weight: bold;
+    }
+
+    .title-text {
+      background: linear-gradient(135deg, #ff6b35 0%, #ff00ff 50%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .early-plan {
+      position: absolute;
+      top: 180px;
+      left: 150px;
+      width: 320px;
+      padding: 25px;
+      background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(75, 0, 130, 0.3) 100%);
+      border: 2px solid #ff00ff;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+      backdrop-filter: blur(10px);
+      z-index: 5;
+    }
+
+    .early-plan .tag {
+      position: absolute;
+      left: -15px;
+      top: 15px;
+      background: linear-gradient(135deg, #6a0dad, #4b0082);
+      color: white;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .early-plan h3 {
+      font-size: 36px;
+      margin-bottom: 12px;
+      color: #ff00ff;
+      font-weight: 700;
+    }
+
+    .early-plan p {
+      font-size: 16px;
+      margin: 8px 0;
+      opacity: 0.9;
+    }
+
+    .early-plan strong {
+      color: #00d4ff;
+      font-weight: 600;
+    }
+
+    svg {
+      position: absolute;
+      top: 220px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .plan {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s ease;
+      z-index: 4;
+      cursor: pointer;
+    }
+
+    .plan-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(135deg, #ff4ecd, #7f00ff);
+      box-shadow: 0 0 20px rgba(255, 78, 205, 0.5);
+    }
+
+    .plan-tag {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #0066ff, #00d4ff);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(0, 102, 255, 0.4);
+    }
+
+    .plan:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .plan:hover .plan-inner {
+      box-shadow: 0 0 30px rgba(255, 78, 205, 0.8), 0 0 60px rgba(127, 0, 255, 0.4);
+    }
+
+    .center-circle {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1a3a, #0a0a23);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .center-circle .big {
+      font-size: 42px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .center-circle .small {
+      font-size: 16px;
+      opacity: 0.8;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    /* Different colors for different plan types */
+    .plan-1 .plan-inner { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .plan-2 .plan-inner { background: linear-gradient(135deg, #8b5cf6, #a855f7); }
+    .plan-3 .plan-inner { background: linear-gradient(135deg, #a855f7, #d946ef); }
+    .plan-4 .plan-inner { background: linear-gradient(135deg, #d946ef, #f43f5e); }
+    .plan-5 .plan-inner { background: linear-gradient(135deg, #f43f5e, #ff6b35); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">
+      <div class="infinity-symbol"><h1>∞</h1></div>
+      <div class="title-text">INVESTMENT PLANS</div>
+    </div>
+
+    <div class="early-plan">
+      <div class="tag">EARLY PLAN</div>
+      <h3>0.2%</h3>
+      <p>hourly for 36 hours</p>
+      <p>Min - Max Investment</p>
+      <p><strong>$10.00-$500.00 USD</strong></p>
+      <p>PRINCIPAL INCLUDED</p>
+    </div>
+
+    <div class="center-circle">
+      <div class="big">100M</div>
+      <div class="small">TOTAL SUPPLY</div>
+    </div>
+
+    <!-- SVG Arcs -->
+    <svg width="100%" height="100%" viewBox="0 0 1400 800">
+      <path id="arc1" d="M 500 400 A 200 200 0 0 1 900 400" stroke="#6366f1" stroke-width="2" fill="none" opacity="0.6"/>
+      <path id="arc2" d="M 400 400 A 300 300 0 0 1 1000 400" stroke="#8b5cf6" stroke-width="2" fill="none" opacity="0.6"/>
+      <path id="arc3" d="M 300 400 A 400 400 0 0 1 1100 400" stroke="#d946ef" stroke-width="2" fill="none" opacity="0.6"/>
+    </svg>
+
+    <!-- Plan Circles -->
+    <div class="plan plan-1" data-path="arc1" data-speed="0.8" data-offset="0">
+      <div class="plan-tag">MIN $10.00</div>
+      <div class="plan-inner">
+        MIN<br>0.4%<br>PLAN 1
+      </div>
+    </div>
+
+    <div class="plan plan-2" data-path="arc1" data-speed="0.9" data-offset="0.35">
+      <div class="plan-tag">MIN $30.00</div>
+      <div class="plan-inner">
+        MIN<br>0.4%<br>PLAN 2
+      </div>
+    </div>
+
+    <div class="plan plan-3" data-path="arc1" data-speed="1.0" data-offset="0.7">
+      <div class="plan-tag">MIN $30.00</div>
+      <div class="plan-inner">
+        MIN<br>2.4%<br>PLAN 3
+      </div>
+    </div>
+
+    <div class="plan plan-3" data-path="arc2" data-speed="0.7" data-offset="0.1">
+      <div class="plan-tag">MIN $10.00</div>
+      <div class="plan-inner">
+        MIN<br>6.1%<br>PLAN 3
+      </div>
+    </div>
+
+    <div class="plan plan-4" data-path="arc2" data-speed="1.1" data-offset="0.6">
+      <div class="plan-tag">MIN $50.00</div>
+      <div class="plan-inner">
+        MIN<br>4.2%<br>PLAN 4
+      </div>
+    </div>
+
+    <div class="plan plan-5" data-path="arc2" data-speed="0.6" data-offset="0.3">
+      <div class="plan-tag">MIN $100.00</div>
+      <div class="plan-inner">
+        MIN<br>8.3%<br>PLAN 5
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const plans = document.querySelectorAll('.plan');
+
+    plans.forEach((plan) => {
+      const pathId = plan.dataset.path;
+      const speed = parseFloat(plan.dataset.speed);
+      const initialOffset = parseFloat(plan.dataset.offset) || 0;
+      const path = document.getElementById(pathId);
+      
+      if (!path) {
+        console.error(`Path with id ${pathId} not found`);
+        return;
+      }
+      
+      const totalLength = path.getTotalLength();
+      let offset = initialOffset * totalLength;
+
+      function animate() {
+        offset = (offset + speed) % totalLength;
+        const point = path.getPointAtLength(offset);
+        
+        // Convert SVG coordinates to screen coordinates
+        const svg = document.querySelector('svg');
+        const rect = svg.getBoundingClientRect();
+        const viewBox = svg.viewBox.baseVal;
+        
+        const scaleX = rect.width / viewBox.width;
+        const scaleY = rect.height / viewBox.height;
+        
+        const screenX = rect.left + (point.x * scaleX);
+        const screenY = rect.top + (point.y * scaleY);
+        
+        plan.style.position = 'fixed';
+        plan.style.left = `${screenX}px`;
+        plan.style.top = `${screenY}px`;
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    });
+  </script>
+</body>
+</html>
